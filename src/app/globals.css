@@ -1,0 +1,153 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+* {
+  padding: 0;
+  margin: 0;
+}
+
+/* Theme variable definitions (only neon & dark) */
+.theme-neon {
+  --background: #05060a;
+  --foreground: #e2e8f0;
+  --accent-primary: #00d4ff;
+  --accent-secondary: #b347d9;
+  --accent-tertiary: #ff0a78;
+  --accent-border: 0 212 255;
+  --accent-bg: rgba(0,212,255,0.08);
+  --accent-fg: #00d4ff;
+  --accent-focus: rgba(0,212,255,0.35);
+}
+
+.theme-dark {
+  --background: #0e1116;
+  --foreground: #f1f5f9;
+  --accent-primary: #6366f1;
+  --accent-secondary: #8b5cf6;
+  --accent-tertiary: #ec4899;
+  --accent-border: 99 102 241;
+  --accent-bg: rgba(99,102,241,0.10);
+  --accent-fg: #818cf8;
+  --accent-focus: rgba(99,102,241,0.40);
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  color: var(--foreground);
+  background: var(--background);
+  font-family: 'Inter', sans-serif;
+  overflow-x: hidden;
+  transition: background-color .4s ease, color .4s ease;
+}
+
+/* Rolling gradient text animation for brand */
+@keyframes gradient-roll {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+.gradient-rolling-text {
+  background: linear-gradient(90deg, var(--accent-primary), var(--accent-secondary), var(--accent-tertiary), var(--accent-primary));
+  background-size: 300% 300%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  animation: gradient-roll 6s linear infinite;
+  position: relative;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .gradient-rolling-text { animation: none; background-size: 100% 100%; }
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #1a1a2e;
+}
+
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(135deg, #00d4ff, #b347d9);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(135deg, #b347d9, #ff0a78);
+}
+
+/* Glassmorphism effect */
+.glass {
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+/* Particle animation */
+.particle {
+  position: absolute;
+  border-radius: 50%;
+  pointer-events: none;
+  animation: float 6s ease-in-out infinite;
+}
+
+.particle:nth-child(1) {
+  width: 4px;
+  height: 4px;
+  background: #00d4ff;
+  animation-delay: 0s;
+}
+
+.particle:nth-child(2) {
+  width: 6px;
+  height: 6px;
+  background: #b347d9;
+  animation-delay: 2s;
+}
+
+.particle:nth-child(3) {
+  width: 3px;
+  height: 3px;
+  background: #ff0a78;
+  animation-delay: 4s;
+}
+
+/* Typing effect */
+.typing-effect {
+  border-right: 2px solid #00d4ff;
+  white-space: nowrap;
+  overflow: hidden;
+  animation: typing 3.5s steps(40, end), blink-caret .75s step-end infinite;
+}
+
+/* Glow effects */
+.glow-blue {
+  box-shadow: 0 0 20px rgba(0, 212, 255, 0.3);
+}
+
+.glow-purple {
+  box-shadow: 0 0 20px rgba(179, 71, 217, 0.3);
+}
+
+.glow-pink {
+  box-shadow: 0 0 20px rgba(255, 10, 120, 0.3);
+}
+
+/* Performance-friendly global tweaks */
+* {
+  -webkit-tap-highlight-color: transparent;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .will-change-transform {
+    will-change: transform;
+  }
+}

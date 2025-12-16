@@ -1,0 +1,55 @@
+import type { Metadata, Viewport } from 'next'
+import AIAssistant from '../components/AIAssistant'
+import CursorFX from '../components/CursorFX'
+import { MotionProvider } from '../providers/MotionProvider'
+import { ThemeProvider } from '../providers/ThemeProvider'
+import './globals.css'
+
+export const metadata: Metadata = {
+  title: 'Suganth Anaadhi | Web Developer & Designer',
+  description: 'Portfolio of Suganth Anaadhi – building realistic, performant, and visually engaging web experiences with Next.js, React, and modern UI engineering.',
+  keywords: 'Suganth Anaadhi, web developer, UI engineer, front-end developer, React, Next.js, portfolio, performance, accessibility',
+  authors: [{ name: 'Suganth Anaadhi', url: 'mailto:suganthanaadhi@gmail.com' }],
+  openGraph: {
+    title: 'Suganth Anaadhi | Web Developer & Designer',
+    description: 'Real-world ready web applications and immersive UI engineering.',
+    type: 'website',
+    locale: 'en_IN',
+    url: 'https://example.com', // TODO: replace with real domain
+  },
+  metadataBase: new URL('https://example.com'), // TODO: replace with real domain
+  icons: {
+    icon: '/favicon.svg',
+    shortcut: '/favicon.svg',
+    apple: '/favicon.svg',
+  },
+}
+
+export const viewport: Viewport = {
+  width: 'device-width',
+  initialScale: 1,
+}
+
+export default function RootLayout({
+  children,
+}: {
+  children: React.ReactNode
+}) {
+  return (
+    <html lang="en" className="scroll-smooth" suppressHydrationWarning>
+      <head>
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+      </head>
+      <body className="font-inter bg-background text-foreground antialiased" suppressHydrationWarning>
+        <ThemeProvider>
+          <MotionProvider>
+            {children}
+            <AIAssistant />
+            <CursorFX />
+          </MotionProvider>
+        </ThemeProvider>
+      </body>
+    </html>
+  )
+}
