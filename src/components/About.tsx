@@ -13,18 +13,19 @@ const About = () => {
     visible: {
       opacity: 1,
       transition: {
-        staggerChildren: 0.2,
+        staggerChildren: 0.08,
       },
     },
   }
 
   const itemVariants = {
-    hidden: { opacity: 0, y: 20 },
+    hidden: { opacity: 0, y: 12 },
     visible: {
       opacity: 1,
       y: 0,
       transition: {
-        duration: 0.6,
+        duration: 0.5,
+        ease: 'easeOut',
       },
     },
   }
@@ -71,7 +72,7 @@ const About = () => {
                   {/* Profile image - portrait ratio, prioritize face */}
                   <Image
                     src="/me.jpg"
-                    alt="Portrait"
+                    alt="Suganth Anaadhi Portrait"
                     fill
                     sizes="(min-width: 1024px) 480px, (min-width: 640px) 90vw, 95vw"
                     className="h-full w-full object-cover object-[center_18%]"

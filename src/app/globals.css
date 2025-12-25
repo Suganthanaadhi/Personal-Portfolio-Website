@@ -36,6 +36,13 @@
 html {
   scroll-behavior: smooth;
   scroll-padding-top: 80px; /* Ensure nav doesn't cover content when scrolling to sections */
+  overflow-y: scroll; /* Always show scrollbar to prevent layout shift */
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
 }
 
 body {
@@ -44,6 +51,9 @@ body {
   font-family: 'Inter', sans-serif;
   overflow-x: hidden;
   transition: background-color .4s ease, color .4s ease;
+  will-change: scroll-position;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 /* Rolling gradient text animation for brand */

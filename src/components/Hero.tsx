@@ -572,7 +572,7 @@ const Hero = () => {
         <motion.div
           initial={{ opacity: 0, y: 50 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 1 }}
+          transition={{ duration: 0.8, ease: 'easeOut' }}
           className="space-y-8"
         >
           {/* Main Heading */}
@@ -580,7 +580,7 @@ const Hero = () => {
             className="text-4xl sm:text-6xl lg:text-8xl font-extrabold font-poppins tracking-tight"
             initial={{ opacity: 0, scale: 0.5 }}
             animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 1, delay: 0.2 }}
+            transition={{ duration: 0.8, delay: 0.1, ease: 'easeOut' }}
           >
             <span className="bg-gradient-to-r from-neon-blue via-neon-purple to-neon-pink bg-clip-text text-transparent drop-shadow-[0_6px_18px_rgba(0,0,0,0.45)]">
             G v Suganthan
@@ -592,16 +592,16 @@ const Hero = () => {
             className="text-xl sm:text-2xl lg:text-4xl text-gray-300 font-medium"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            transition={{ duration: 1, delay: 0.5 }}
+            transition={{ duration: 0.8, delay: 0.3 }}
           >
             <span className="text-white">I&apos;m a </span>
             <motion.span
               key={currentRole}
               className="text-neon-blue font-semibold"
-              initial={{ opacity: 0, y: 20 }}
+              initial={{ opacity: 0, y: 15 }}
               animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -20 }}
-              transition={{ duration: 0.5 }}
+              exit={{ opacity: 0, y: -15 }}
+              transition={{ duration: 0.4, ease: 'easeOut' }}
             >
               {roles[currentRole]}
             </motion.span>
@@ -610,9 +610,9 @@ const Hero = () => {
           {/* Tagline */}
           <motion.p
             className="text-lg sm:text-xl text-gray-400 max-w-3xl mx-auto leading-relaxed"
-            initial={{ opacity: 0, y: 30 }}
+            initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 1, delay: 0.8 }}
+            transition={{ duration: 0.8, delay: 0.5, ease: 'easeOut' }}
           >
             Crafting digital experiences that blend creativity with functionality. 
             Passionate about modern web technologies and user-centered design.
@@ -621,9 +621,9 @@ const Hero = () => {
           {/* CTA Buttons */}
           <motion.div
             className="flex flex-col sm:flex-row gap-6 justify-center items-center pt-8"
-            initial={{ opacity: 0, y: 40 }}
+            initial={{ opacity: 0, y: 30 }}
             animate={reduceMotion ? { opacity: 1 } : { opacity: 1, y: 0 }}
-            transition={{ duration: 1, delay: 1.1 }}
+            transition={{ duration: 0.8, delay: 0.7, ease: 'easeOut' }}
           >
             <motion.button
               suppressHydrationWarning

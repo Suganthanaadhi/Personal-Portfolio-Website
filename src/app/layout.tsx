@@ -6,12 +6,12 @@ import { ThemeProvider } from '../providers/ThemeProvider'
 import './globals.css'
 
 export const metadata: Metadata = {
-  title: 'Suganth Anaadhi | Web Developer & Designer',
-  description: 'Portfolio of Suganth Anaadhi – building realistic, performant, and visually engaging web experiences with Next.js, React, and modern UI engineering.',
-  keywords: 'Suganth Anaadhi, web developer, UI engineer, front-end developer, React, Next.js, portfolio, performance, accessibility',
-  authors: [{ name: 'Suganth Anaadhi', url: 'mailto:suganthanaadhi@gmail.com' }],
+  title: 'Suganthanaadhi | Web Developer & Designer',
+  description: 'Portfolio of Suganthanaadhi – building realistic, performant, and visually engaging web experiences with Next.js, React, and modern UI engineering.',
+  keywords: 'Suganthanaadhi, web developer, UI engineer, front-end developer, React, Next.js, portfolio, performance, accessibility',
+  authors: [{ name: 'Suganthanaadhi', url: 'mailto:suganthanaadhi@gmail.com' }],
   openGraph: {
-    title: 'Suganth Anaadhi | Web Developer & Designer',
+    title: 'Suganthanaadhi | Web Developer & Designer',
     description: 'Real-world ready web applications and immersive UI engineering.',
     type: 'website',
     locale: 'en_IN',
@@ -37,12 +37,12 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="en" className="scroll-smooth" suppressHydrationWarning>
+    <html lang="en" className="scroll-smooth" suppressHydrationWarning style={{scrollBehavior: 'smooth'}}>
       <head>
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
       </head>
-      <body className="font-inter bg-background text-foreground antialiased" suppressHydrationWarning>
+      <body className="font-inter bg-background text-foreground antialiased" suppressHydrationWarning style={{WebkitFontSmoothing: 'antialiased', textRendering: 'optimizeLegibility'}}>
         <ThemeProvider>
           <MotionProvider>
             {children}
