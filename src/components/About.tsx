@@ -73,10 +73,11 @@ const About = () => {
                     src="/me.jpg"
                     alt="Portrait"
                     fill
-                    sizes="(min-width: 1024px) 480px, 90vw"
+                    sizes="(min-width: 1024px) 480px, (min-width: 640px) 90vw, 95vw"
                     className="h-full w-full object-cover object-[center_18%]"
                     draggable={false}
                     priority
+                    quality={85}
                   />
 
                   {/* Sheen sweep on hover */}

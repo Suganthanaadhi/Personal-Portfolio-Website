@@ -28,6 +28,7 @@ export const metadata: Metadata = {
 export const viewport: Viewport = {
   width: 'device-width',
   initialScale: 1,
+  colorScheme: 'dark light', // Performance: allow browser to optimize rendering
 }
 
 export default function RootLayout({

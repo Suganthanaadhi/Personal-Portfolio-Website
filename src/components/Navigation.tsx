@@ -23,29 +23,43 @@ const Navigation = () => {
   ]), [])
 
   useEffect(() => {
+    // Cache section elements to avoid repeated DOM queries
+    const sectionElements = new Map<string, HTMLElement>()
+    const menuItems = [
+      { href: '#home', label: 'Home' },
+      { href: '#about', label: 'About' },
+      { href: '#skills', label: 'Skills' },
+      { href: '#projects', label: 'Projects' },
+      { href: '#experience', label: 'Experience' },
+      { href: '#achievements', label: 'Achievements' },
+      { href: '#contact', label: 'Contact' },
+    ]
+    
+    for (const item of menuItems) {
+      const el = document.getElementById(item.href.slice(1))
+      if (el) sectionElements.set(item.href.slice(1), el)
+    }
+
     const update = () => {
       tickingRef.current = false
       setScrolled(window.scrollY > 50)
 
-      const sections = menuItems.map((item) => item.href.slice(1))
       const navHeight = navRef.current?.getBoundingClientRect().height ?? 0
-      // Use a trigger line at ~35% of viewport height plus nav height for better "in view" detection
       const triggerY = navHeight + Math.min(window.innerHeight * 0.35, 320)
 
-      // If at the very bottom, force last section active
-      const atBottom = window.innerHeight + Math.ceil(window.scrollY) >= (document.documentElement.scrollHeight || document.body.scrollHeight)
-      if (atBottom) {
-        setActiveSection(sections[sections.length - 1])
+      // Check if at bottom - optimized
+      const docHeight = document.documentElement.scrollHeight || document.body.scrollHeight
+      if (window.innerHeight + window.scrollY >= docHeight - 10) {
+        setActiveSection('contact')
         return
       }
 
+      // Find active section - early exit optimization
       let current: string | undefined
-      for (const section of sections) {
-        const el = document.getElementById(section)
-        if (!el) continue
+      for (const [sectionId, el] of sectionElements) {
         const rect = el.getBoundingClientRect()
         if (rect.top <= triggerY && rect.bottom >= triggerY) {
-          current = section
+          current = sectionId
           break
         }
       }
@@ -67,7 +81,7 @@ const Navigation = () => {
       window.removeEventListener('scroll', onScroll)
       window.removeEventListener('resize', onResize)
     }
-  }, [menuItems])
+  }, [])
 
   const scrollToSection = (href: string) => {
     // Special case: home should smoothly scroll to top
