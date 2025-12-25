@@ -572,7 +572,7 @@ const Contact = () => {
         className="mt-20 pt-8 border-t border-gray-700/30 text-center"
       >
         <p className="text-gray-400">
-          © {new Date().getFullYear()} Suganth aadhi. Built with{' '}
+          © {new Date().getFullYear()} Suganthanaadhi. Built with{' '}
           <span className="text-neon-blue">Next.js</span>,{' '}
           <span className="text-neon-purple">Tailwind CSS</span>, and{' '}
           <span className="text-neon-pink">Framer Motion</span>. All rights reserved.

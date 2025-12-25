@@ -4,8 +4,6 @@ const nextConfig = {
   distDir: '.next-dev',
   // Turn off React Strict Mode in dev to avoid double-invoked effects while iterating
   reactStrictMode: false,
-  // Enable static export for GitHub Pages
-  output: 'export',
   images: { unoptimized: true },
   experimental: {
     turbo: {

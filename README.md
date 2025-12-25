@@ -1,19 +1,8 @@
-# Personal Portfolio Website
+# Modern Personal Portfolio Website
 
-> **Live Portfolio:** [https://personal-portfolio-website.vercel.app](https://personal-portfolio-website.vercel.app)
-
-**Owner:** Suganth Anaadhi | **Email:** suganthanaadhi@gmail.com
-
----
+> Personalized for **Suganth Anaadhi** (owner email: **suganthanaadhi@gmail.com**). Update domain + social links before production deployment.
 
 A stunning, fully responsive personal portfolio website built with **Next.js 14**, **Tailwind CSS**, and **Framer Motion**. Features dark theme with neon accent colors, smooth animations, and modern design patterns.
-
-### 📊 Performance Optimized
-- **35% faster** initial load (9.5s → 6-7s)
-- **60% faster** scroll detection (8-12ms → 3-4ms)
-- **40% lower** CPU usage (CursorFX optimization)
-- **25% faster** image loading
-- **Zero layout shift** (CLS: 0.0)
 
 ## 🌟 Features
 
