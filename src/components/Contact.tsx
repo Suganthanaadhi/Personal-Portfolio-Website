@@ -82,9 +82,10 @@ const Contact = () => {
       return
     }
 
-    const publicKey = process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY
-    const serviceId = process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID
-    const templateId = process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID
+    // EmailJS credentials - embedded at build time via NEXT_PUBLIC_ vars
+    const publicKey = process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY || 'gfXaN2p4zKTgIs9dE'
+    const serviceId = process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID || 'service_xitkdv5'
+    const templateId = process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID || 'template_mmj9e54'
 
     if (!publicKey || !serviceId || !templateId) {
       console.warn('[Contact] Missing EmailJS environment variables.')
