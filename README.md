@@ -4,7 +4,11 @@
 
 A stunning, fully responsive personal portfolio website built with **Next.js 14**, **Tailwind CSS**, and **Framer Motion**. Features dark theme with neon accent colors, smooth animations, and modern design patterns.
 
-## 🌟 Features
+## � Live Demo
+
+**[View Live Portfolio →](https://suganthanaadhi.github.io/Personal-Portfolio-Website/)**
+
+## �🌟 Features
 
 - **TypeScript**: Fully typed for better development experience
 - **SEO Friendly**: Optimized meta tags and semantic HTML structure
