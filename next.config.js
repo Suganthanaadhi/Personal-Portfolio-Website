@@ -15,15 +15,6 @@ const nextConfig = {
       },
     },
   },
-  async redirects() {
-    return [
-      {
-        source: '/favicon.ico',
-        destination: '/favicon.svg',
-        permanent: false,
-      },
-    ]
-  },
   // rewrites removed: now /me.jpg will serve the real file from public/
 }
 
