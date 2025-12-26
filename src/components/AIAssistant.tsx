@@ -131,23 +131,23 @@ export default function AIAssistant() {
     }
     setLoading(true)
     try {
-      // Use OpenAI API
-      const apiKey = process.env.NEXT_PUBLIC_OPENAI_API_KEY || ''
+      // Use OpenRouter API (free tier, CORS-enabled for browser requests)
+      const orToken = process.env.NEXT_PUBLIC_OPENROUTER_API_KEY || ''
       
-      if (!apiKey) {
-        setMessages(m => [...m, { id: crypto.randomUUID(), role: 'assistant', content: '⚠️ OpenAI API key not configured. Please add NEXT_PUBLIC_OPENAI_API_KEY to your environment.' }])
+      if (!orToken) {
+        setMessages(m => [...m, { id: crypto.randomUUID(), role: 'assistant', content: '⚠️ OpenRouter API key not configured. Please add NEXT_PUBLIC_OPENROUTER_API_KEY to your environment.' }])
         setLoading(false)
         return
       }
 
-      const res = await fetch('https://api.openai.com/v1/chat/completions', {
+      const res = await fetch('https://openrouter.ai/api/v1/chat/completions', {
         method: 'POST',
         headers: {
-          'Authorization': `Bearer ${apiKey}`,
+          'Authorization': `Bearer ${orToken}`,
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          model: 'gpt-3.5-turbo',
+          model: 'mistralai/mistral-7b-instruct:free',
           messages: messages.concat(userMsg).map(m => ({
             role: m.role,
             content: m.content,
@@ -167,7 +167,7 @@ export default function AIAssistant() {
         role: 'assistant',
         content: data?.choices?.[0]?.message?.content ?? 'Sorry, no response.',
       }
-      setProvider('openai')
+      setProvider('openrouter')
       setMessages(m => [...m, reply])
     } catch (e: any) {
       const errorMsg = e?.message || 'Network error'
