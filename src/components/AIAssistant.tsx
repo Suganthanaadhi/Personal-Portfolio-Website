@@ -131,17 +131,50 @@ export default function AIAssistant() {
     }
     setLoading(true)
     try {
-      const res = await fetch('/api/chat', {
+      // Get API key from environment
+      const apiKey = process.env.NEXT_PUBLIC_OPENAI_API_KEY
+      const model = process.env.NEXT_PUBLIC_OPENAI_MODEL || 'gpt-4o-mini'
+      
+      if (!apiKey) {
+        setMessages(m => [...m, { id: crypto.randomUUID(), role: 'assistant', content: '⚠️ OpenAI API key not configured. Please add NEXT_PUBLIC_OPENAI_API_KEY to your environment.' }])
+        setLoading(false)
+        return
+      }
+
+      // Call OpenAI API directly from browser
+      const res = await fetch('https://api.openai.com/v1/chat/completions', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ messages: messages.concat(userMsg) }),
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${apiKey}`,
+        },
+        body: JSON.stringify({
+          model,
+          messages: messages.concat(userMsg).map(m => ({
+            role: m.role,
+            content: m.content,
+          })),
+          temperature: 0.7,
+          max_tokens: 500,
+        }),
       })
+
+      if (!res.ok) {
+        const error = await res.json()
+        throw new Error(error?.error?.message || `API error: ${res.status}`)
+      }
+
       const data = await res.json()
-      const reply: Msg = { id: crypto.randomUUID(), role: 'assistant', content: String(data?.reply ?? 'Sorry, no response.') }
-      if (data?.provider) setProvider(data.provider)
+      const reply: Msg = {
+        id: crypto.randomUUID(),
+        role: 'assistant',
+        content: data?.choices?.[0]?.message?.content ?? 'Sorry, no response.',
+      }
+      setProvider('openai')
       setMessages(m => [...m, reply])
     } catch (e: any) {
-      setMessages(m => [...m, { id: crypto.randomUUID(), role: 'assistant', content: `Error: ${e?.message || 'network'}` }])
+      const errorMsg = e?.message || 'Network error'
+      setMessages(m => [...m, { id: crypto.randomUUID(), role: 'assistant', content: `❌ Error: ${errorMsg}` }])
     } finally {
       setLoading(false)
       // Navigate after reply if a chip requested it

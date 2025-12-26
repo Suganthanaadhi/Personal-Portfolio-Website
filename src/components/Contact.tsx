@@ -4,7 +4,7 @@ import { contact as contactData } from '@/data/contact'
 import emailjs from 'emailjs-com'
 import { AnimatePresence, motion } from 'framer-motion'
 import { Github, Instagram, Linkedin, Mail, MapPin, Phone, Send, Twitter } from 'lucide-react'
-import { useEffect, useRef, useState } from 'react'
+import { useRef, useState } from 'react'
 
 const Contact = () => {
   const [formData, setFormData] = useState({
