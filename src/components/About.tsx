@@ -3,7 +3,6 @@
 import { about } from '@/data/about'
 import { motion } from 'framer-motion'
 import { Download } from 'lucide-react'
-import Image from 'next/image'
 
 const About = () => {
   const skills = about.skills
@@ -70,15 +69,11 @@ const About = () => {
               >
                 <div className="relative h-full w-full overflow-hidden rounded-[calc(theme(borderRadius.2xl)-2px)] bg-white/5 backdrop-blur-xl ring-1 ring-white/10">
                   {/* Profile image - portrait ratio, prioritize face */}
-                  <Image
-                    src="/me.jpg"
+                  <img
+                    src="/Personal-Portfolio-Website/me.jpg"
                     alt="Suganth Anaadhi Portrait"
-                    fill
-                    sizes="(min-width: 1024px) 480px, (min-width: 640px) 90vw, 95vw"
                     className="h-full w-full object-cover object-[center_18%]"
                     draggable={false}
-                    priority
-                    quality={85}
                   />
 
                   {/* Sheen sweep on hover */}
