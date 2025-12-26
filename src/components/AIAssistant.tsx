@@ -10,7 +10,7 @@ export default function AIAssistant() {
   const [open, setOpen] = useState(false)
   const [input, setInput] = useState('')
   const [loading, setLoading] = useState(false)
-  const [provider, setProvider] = useState<'openrouter' | 'openai' | 'local' | null>(null)
+  const [provider, setProvider] = useState<'openrouter' | 'openai' | 'huggingface' | 'local' | null>(null)
   const [showLocalNotice, setShowLocalNotice] = useState(false)
   const [messages, setMessages] = useState<Msg[]>([{
     id: 'hello', role: 'assistant', content: "Hi! I’m your portfolio assistant. Ask me about my projects, skills, or how to get in touch."
@@ -44,7 +44,7 @@ export default function AIAssistant() {
           setMessages(parsed)
         }
       }
-      if (savedProvider === 'openai' || savedProvider === 'openrouter' || savedProvider === 'local') {
+      if (savedProvider === 'openai' || savedProvider === 'openrouter' || savedProvider === 'huggingface' || savedProvider === 'local') {
         setProvider(savedProvider)
         if (savedProvider === 'local' && !dismissed) setShowLocalNotice(true)
       }
@@ -131,37 +131,34 @@ export default function AIAssistant() {
     }
     setLoading(true)
     try {
-      // Get API key from environment
-      const apiKey = process.env.NEXT_PUBLIC_OPENAI_API_KEY
-      const model = process.env.NEXT_PUBLIC_OPENAI_MODEL || 'gpt-4o-mini'
+      // Use HuggingFace Inference API (free, browser-compatible)
+      const hfToken = process.env.NEXT_PUBLIC_HF_TOKEN || ''
       
-      if (!apiKey) {
-        setMessages(m => [...m, { id: crypto.randomUUID(), role: 'assistant', content: '⚠️ OpenAI API key not configured. Please add NEXT_PUBLIC_OPENAI_API_KEY to your environment.' }])
+      if (!hfToken) {
+        setMessages(m => [...m, { id: crypto.randomUUID(), role: 'assistant', content: '⚠️ HuggingFace API token not configured. Please add NEXT_PUBLIC_HF_TOKEN to your environment.' }])
         setLoading(false)
         return
       }
 
-      // Call OpenAI API directly from browser
-      const res = await fetch('https://api.openai.com/v1/chat/completions', {
+      const res = await fetch('https://api-inference.huggingface.co/models/mistralai/Mistral-7B-Instruct-v0.1/v1/chat/completions', {
         method: 'POST',
         headers: {
+          'Authorization': `Bearer ${hfToken}`,
           'Content-Type': 'application/json',
-          'Authorization': `Bearer ${apiKey}`,
         },
         body: JSON.stringify({
-          model,
           messages: messages.concat(userMsg).map(m => ({
             role: m.role,
             content: m.content,
           })),
+          max_tokens: 300,
           temperature: 0.7,
-          max_tokens: 500,
         }),
       })
 
       if (!res.ok) {
         const error = await res.json()
-        throw new Error(error?.error?.message || `API error: ${res.status}`)
+        throw new Error(error?.error?.[0] || `API error: ${res.status}`)
       }
 
       const data = await res.json()
@@ -170,7 +167,7 @@ export default function AIAssistant() {
         role: 'assistant',
         content: data?.choices?.[0]?.message?.content ?? 'Sorry, no response.',
       }
-      setProvider('openai')
+      setProvider('huggingface')
       setMessages(m => [...m, reply])
     } catch (e: any) {
       const errorMsg = e?.message || 'Network error'
@@ -227,7 +224,7 @@ export default function AIAssistant() {
                 <div className="text-sm font-semibold text-white">AI Assistant</div>
                 {provider && (
                   <span className="rounded-full border border-white/10 bg-white/10 px-2 py-0.5 text-[10px] uppercase tracking-wide text-white/70">
-                    {provider === 'openrouter' ? 'OpenRouter' : provider === 'openai' ? 'OpenAI' : 'Local'}
+                    {provider === 'openrouter' ? 'OpenRouter' : provider === 'openai' ? 'OpenAI' : provider === 'huggingface' ? 'HuggingFace' : 'Local'}
                   </span>
                 )}
               </div>
