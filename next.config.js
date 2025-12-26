@@ -1,7 +1,5 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  // Use an alternate distDir to avoid Windows locks on .next/trace
-  distDir: '.next-dev',
   // Turn off React Strict Mode in dev to avoid double-invoked effects while iterating
   reactStrictMode: false,
   output: 'export',
