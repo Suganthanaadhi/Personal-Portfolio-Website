@@ -27,15 +27,7 @@ const Contact = () => {
   const emailRef = useRef<HTMLInputElement | null>(null)
   const messageRef = useRef<HTMLTextAreaElement | null>(null)
 
-  useEffect(() => {
-    // Fetch provider status once on mount
-    fetch('/api/contact/providers')
-      .then(r => r.json())
-      .then(data => {
-        if (data?.providers) setProviderStatus(data.providers)
-      })
-      .catch(() => {})
-  }, [])
+  // Provider status check removed - using static export without API routes
 
   const validateAll = (data = formData) => {
     const errs: { name?: string; email?: string; phone?: string; message?: string } = {}
