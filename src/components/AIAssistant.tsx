@@ -131,34 +131,34 @@ export default function AIAssistant() {
     }
     setLoading(true)
     try {
-      // Use HuggingFace Inference API (free, browser-compatible)
-      const hfToken = process.env.NEXT_PUBLIC_HF_TOKEN || ''
+      // Use OpenRouter API (free tier, CORS-enabled for browser requests)
+      const orToken = process.env.NEXT_PUBLIC_OPENROUTER_API_KEY || ''
       
-      if (!hfToken) {
-        setMessages(m => [...m, { id: crypto.randomUUID(), role: 'assistant', content: '⚠️ HuggingFace API token not configured. Please add NEXT_PUBLIC_HF_TOKEN to your environment.' }])
+      if (!orToken) {
+        setMessages(m => [...m, { id: crypto.randomUUID(), role: 'assistant', content: '⚠️ OpenRouter API key not configured. Please add NEXT_PUBLIC_OPENROUTER_API_KEY to your environment.' }])
         setLoading(false)
         return
       }
 
-      const res = await fetch('https://api-inference.huggingface.co/models/mistralai/Mistral-7B-Instruct-v0.1/v1/chat/completions', {
+      const res = await fetch('https://openrouter.ai/api/v1/chat/completions', {
         method: 'POST',
         headers: {
-          'Authorization': `Bearer ${hfToken}`,
+          'Authorization': `Bearer ${orToken}`,
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
+          model: 'mistralai/mistral-7b-instruct:free',
           messages: messages.concat(userMsg).map(m => ({
             role: m.role,
             content: m.content,
           })),
           max_tokens: 300,
-          temperature: 0.7,
         }),
       })
 
       if (!res.ok) {
         const error = await res.json()
-        throw new Error(error?.error?.[0] || `API error: ${res.status}`)
+        throw new Error(error?.error?.message || `API error: ${res.status}`)
       }
 
       const data = await res.json()
@@ -167,7 +167,7 @@ export default function AIAssistant() {
         role: 'assistant',
         content: data?.choices?.[0]?.message?.content ?? 'Sorry, no response.',
       }
-      setProvider('huggingface')
+      setProvider('openrouter')
       setMessages(m => [...m, reply])
     } catch (e: any) {
       const errorMsg = e?.message || 'Network error'
