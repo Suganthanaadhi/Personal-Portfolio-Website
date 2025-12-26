@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from 'next'
-import AIAssistant from '../components/AIAssistant'
+// import AIAssistant from '../components/AIAssistant'  // Disabled: OpenAI API not supported on GitHub Pages due to CORS
 import CursorFX from '../components/CursorFX'
 import { MotionProvider } from '../providers/MotionProvider'
 import { ThemeProvider } from '../providers/ThemeProvider'
@@ -46,7 +46,7 @@ export default function RootLayout({
         <ThemeProvider>
           <MotionProvider>
             {children}
-            <AIAssistant />
+            {/* <AIAssistant /> */}
             <CursorFX />
           </MotionProvider>
         </ThemeProvider>
