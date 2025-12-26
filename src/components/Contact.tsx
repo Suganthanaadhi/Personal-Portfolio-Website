@@ -92,76 +92,25 @@ const Contact = () => {
 
     try {
       let delivered = false
-      // Prefer server route for reliability
-      if (!formData.honey) {
-        try {
-          const res = await fetch('/api/contact', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-              name: formData.name,
-              email: formData.email,
-              phone: formData.phone,
-              message: formData.message,
-              honey: formData.honey,
-            })
-          })
-          const data = await res.json().catch(() => null)
-          if (res.ok && data?.ok) {
-            delivered = true
-            setProvider(data.provider || 'smtp')
-          } else if (res.status === 400 && data) {
-            const newFieldErrors = {
-              name: data.fieldErrors?.name || undefined,
-              email: data.fieldErrors?.email || undefined,
-              // phone intentionally ignored for validation now
-              message: data.fieldErrors?.message || undefined,
-            }
-            setFieldErrors(newFieldErrors)
-            // Only show a small guidance message if needed (avoid generic failure banner)
-            if (!Object.values(newFieldErrors).every(v => !!v)) {
-              setGeneralError(data.errors?.[0] || 'Please correct the highlighted fields.')
-            }
-            // Do NOT fallback to EmailJS on validation failure
-            delivered = false
-            throw new Error('validation')
-          } else if (res.status >= 500) {
-            if (data?.code === 'NO_PROVIDER') {
-              setNoProvider(true)
-              setGeneralError('Email delivery not configured yet. Configure Resend (recommended) or SMTP. Falling back to client if possible.')
-            } else {
-              setGeneralError(data?.error ? `${data.error}${data.code ? ' (' + data.code + ')' : ''}` : 'Server error. Attempting fallback delivery...')
-            }
-            if (data?.code) setProvider(data.code)
-          }
-        } catch (err: any) {
-          if (err.message === 'validation') {
-            // stop further processing
-          } else {
-            // proceed to fallback
-          }
+      
+      // Use EmailJS directly (no server API on static export)
+      if (publicKey && serviceId && templateId) {
+        emailjs.init(publicKey)
+        const templateParams = {
+          from_name: formData.name,
+          from_email: formData.email,
+          from_phone: formData.phone || 'N/A',
+          message: formData.message,
+          to_email: contactData.email,
         }
+        await emailjs.send(serviceId, templateId, templateParams)
+        delivered = true
+        setProvider('emailjs')
+      } else {
+        setGeneralError('Email configuration incomplete. Please contact the site owner.')
       }
 
-      if (!delivered) {
-        if (publicKey && serviceId && templateId) {
-          emailjs.init(publicKey)
-          const templateParams = {
-            from_name: formData.name,
-            from_email: formData.email,
-            from_phone: formData.phone || 'N/A',
-            message: formData.message,
-            to_email: contactData.email,
-          }
-          await emailjs.send(serviceId, templateId, templateParams)
-          delivered = true
-          setProvider(prev => prev || 'emailjs')
-        } else {
-          await new Promise(r => setTimeout(r, 800))
-        }
-      }
-
-  setSubmitStatus(delivered ? 'success' : (submitStatus === 'validation' ? 'validation' : 'error'))
+      setSubmitStatus(delivered ? 'success' : (submitStatus === 'validation' ? 'validation' : 'error'))
       if (delivered) {
         setFormData({ name: '', email: '', phone: '', message: '', honey: '' })
         setFieldErrors({})
