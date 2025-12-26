@@ -2,7 +2,7 @@
 
 import { motion } from 'framer-motion'
 import { Menu, X } from 'lucide-react'
-import { useEffect, useMemo, useRef, useState } from 'react'
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import ThemeToggle from './ThemeToggle'
 
 const Navigation = () => {
@@ -83,7 +83,7 @@ const Navigation = () => {
     }
   }, [])
 
-  const scrollToSection = (href: string) => {
+  const scrollToSection = useCallback((href: string) => {
     // Special case: home should smoothly scroll to top
     if (href === '#home') {
       window.scrollTo({ top: 0, behavior: 'smooth' })
@@ -98,7 +98,7 @@ const Navigation = () => {
       window.scrollTo({ top, behavior: 'smooth' })
     }
     setIsOpen(false)
-  }
+  }, [])
 
   const [hydrated, setHydrated] = useState(false)
   useEffect(() => { setHydrated(true) }, [])
@@ -110,9 +110,9 @@ const Navigation = () => {
       initial={false}
       animate={ hydrated ? { y: 0 } : undefined }
       style={!hydrated ? { transform: 'translateY(0)' } : undefined}
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-200 cubic-bezier(0.4, 0, 0.2, 1) ${
         scrolled 
-          ? 'bg-background/80 backdrop-blur-lg border-b border-gray-700/30' 
+          ? 'bg-background/80 backdrop-blur-lg border-b border-gray-700/30 shadow-lg' 
           : 'bg-transparent'
       }`}
     >
@@ -152,20 +152,22 @@ const Navigation = () => {
                     e.preventDefault()
                     scrollToSection(item.href)
                   }}
-                  className={`relative px-3 py-2 text-sm font-medium transition-colors duration-300 ${
+                  className={`relative px-3 py-2 text-sm font-medium transition-colors duration-200 ${
                     activeSection === item.href.slice(1)
                       ? 'text-neon-blue'
                       : 'text-gray-300 hover:text-white'
                   }`}
                   whileHover={{ y: -2 }}
                   whileTap={{ y: 0 }}
+                  transition={{ duration: 0.2 }}
                 >
                   {item.label}
                   {activeSection === item.href.slice(1) && (
                     <motion.div
-                      className="absolute bottom-0 left-0 right-0 h-0.5 bg-gradient-to-r from-neon-blue to-neon-purple"
+                      className="absolute bottom-0 left-0 right-0 h-0.5 bg-gradient-to-r from-neon-blue to-neon-purple rounded-full"
                       layoutId="activeIndicator"
                       initial={false}
+                      transition={{ type: 'spring', stiffness: 300, damping: 30 }}
                     />
                   )}
                 </motion.a>
@@ -178,9 +180,10 @@ const Navigation = () => {
             <motion.button
               suppressHydrationWarning
               onClick={() => scrollToSection('#contact')}
-              className="px-6 py-2 bg-gradient-to-r from-neon-blue to-neon-purple text-white font-medium rounded-full hover:shadow-lg transition-all duration-300"
+              className="px-6 py-2 bg-gradient-to-r from-neon-blue to-neon-purple text-white font-medium rounded-full hover:shadow-lg transition-all duration-200 transform"
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
+              transition={{ duration: 0.2 }}
             >
               Let&apos;s Talk
             </motion.button>
@@ -208,7 +211,7 @@ const Navigation = () => {
           opacity: isOpen ? 1 : 0, 
           height: isOpen ? 'auto' : 0 
         }}
-        transition={{ duration: 0.3 }}
+        transition={{ duration: 0.2 }}
         className="lg:hidden overflow-hidden bg-background/95 backdrop-blur-lg border-t border-gray-700/30"
       >
         <div className="px-4 py-6 space-y-4">
@@ -220,7 +223,7 @@ const Navigation = () => {
                 e.preventDefault()
                 scrollToSection(item.href)
               }}
-              className={`block px-4 py-3 text-base font-medium rounded-lg transition-colors duration-300 ${
+              className={`block px-4 py-3 text-base font-medium rounded-lg transition-colors duration-200 ${
                 activeSection === item.href.slice(1)
                   ? 'text-neon-blue bg-neon-blue/10'
                   : 'text-gray-300 hover:text-white hover:bg-gray-700/30'
@@ -230,7 +233,7 @@ const Navigation = () => {
                 opacity: isOpen ? 1 : 0, 
                 x: isOpen ? 0 : -20 
               }}
-              transition={{ delay: index * 0.1 }}
+              transition={{ delay: index * 0.08, duration: 0.2 }}
             >
               {item.label}
             </motion.a>
@@ -240,13 +243,13 @@ const Navigation = () => {
           <motion.button
             suppressHydrationWarning
             onClick={() => scrollToSection('#contact')}
-            className="w-full mt-4 px-6 py-3 bg-gradient-to-r from-neon-blue to-neon-purple text-white font-medium rounded-lg"
+            className="w-full mt-4 px-6 py-3 bg-gradient-to-r from-neon-blue to-neon-purple text-white font-medium rounded-lg transition-transform duration-200"
             initial={{ opacity: 0, y: 20 }}
             animate={{ 
               opacity: isOpen ? 1 : 0, 
               y: isOpen ? 0 : 20 
             }}
-            transition={{ delay: menuItems.length * 0.1 }}
+            transition={{ delay: menuItems.length * 0.08, duration: 0.2 }}
             whileTap={{ scale: 0.95 }}
           >
             Let&apos;s Talk
