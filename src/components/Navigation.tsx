@@ -110,11 +110,7 @@ const Navigation = () => {
       initial={false}
       animate={ hydrated ? { y: 0 } : undefined }
       style={!hydrated ? { transform: 'translateY(0)' } : undefined}
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-200 cubic-bezier(0.4, 0, 0.2, 1) ${
-        scrolled 
-          ? 'bg-background/80 backdrop-blur-lg border-b border-gray-700/30 shadow-lg' 
-          : 'bg-transparent'
-      }`}
+      className="fixed top-0 left-0 right-0 z-50 bg-background/70 backdrop-blur-md border-b border-gray-700/30 transition-all duration-200 cubic-bezier(0.4, 0, 0.2, 1)"
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16 lg:h-20">
