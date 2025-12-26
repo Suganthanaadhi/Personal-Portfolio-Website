@@ -70,6 +70,7 @@ jobs:
       - name: Build with Next.js
         env:
           NEXT_PUBLIC_OPENROUTER_API_KEY: ${{ secrets.NEXT_PUBLIC_OPENROUTER_API_KEY }}
+          DEPLOY_TO_GITHUB_PAGES: 'true'
         run: ${{ steps.detect-package-manager.outputs.runner }} next build
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3

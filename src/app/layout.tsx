@@ -19,9 +19,9 @@ export const metadata: Metadata = {
   },
   metadataBase: new URL('https://example.com'), // TODO: replace with real domain
   icons: {
-    icon: '/Personal-Portfolio-Website/favicon.svg',
-    shortcut: '/Personal-Portfolio-Website/favicon.svg',
-    apple: '/Personal-Portfolio-Website/favicon.svg',
+    icon: '/favicon.svg?auto=format&fit=crop&w=64&h=64',
+    shortcut: '/favicon.svg',
+    apple: '/favicon.svg',
   },
 }
 
