@@ -426,16 +426,15 @@ const Contact = () => {
                 suppressHydrationWarning
                 type="submit"
                 disabled={isSubmitting || Object.keys(validateAll()).length > 0}
-                className="w-full py-4 px-6 bg-gradient-to-r from-neon-blue to-neon-purple hover:from-neon-purple hover:to-neon-pink disabled:from-gray-600 disabled:to-gray-700 disabled:cursor-not-allowed text-white font-semibold rounded-lg transition-all duration-200 flex items-center justify-center gap-2 transform"
+                className="w-full py-4 px-6 bg-gradient-to-r from-neon-blue to-neon-purple hover:from-neon-purple hover:to-neon-pink disabled:from-gray-600 disabled:to-gray-700 disabled:cursor-not-allowed text-white font-semibold rounded-lg transition-all duration-300 flex items-center justify-center gap-2"
                 whileHover={{ scale: isSubmitting ? 1 : 1.02 }}
                 whileTap={{ scale: isSubmitting ? 1 : 0.98 }}
-                transition={{ duration: 0.2 }}
               >
                 {isSubmitting ? (
                   <motion.div
                     className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full"
                     animate={{ rotate: 360 }}
-                    transition={{ duration: 0.8, repeat: Infinity, ease: 'linear' }}
+                    transition={{ duration: 1, repeat: Infinity, ease: 'linear' }}
                   />
                 ) : (
                   <Send className="w-5 h-5" />
