@@ -1,9 +1,9 @@
 'use client'
 
 import { about } from '@/data/about'
+import { withBasePath } from '@/utils/pathHelper'
 import { motion } from 'framer-motion'
 import { Download } from 'lucide-react'
-import { withBasePath } from '@/utils/pathHelper'
 
 const About = () => {
   const skills = about.skills

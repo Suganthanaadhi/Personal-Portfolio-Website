@@ -5,6 +5,9 @@ import { MotionProvider } from '../providers/MotionProvider'
 import { ThemeProvider } from '../providers/ThemeProvider'
 import './globals.css'
 
+// Build-time basePath detection
+const basePath = process.env.DEPLOY_TO_GITHUB_PAGES ? '/Personal-Portfolio-Website' : ''
+
 export const metadata: Metadata = {
   title: 'Suganthanaadhi | Web Developer & Designer',
   description: 'Portfolio of Suganthanaadhi – building realistic, performant, and visually engaging web experiences with Next.js, React, and modern UI engineering.',
@@ -19,9 +22,9 @@ export const metadata: Metadata = {
   },
   metadataBase: new URL('https://example.com'), // TODO: replace with real domain
   icons: {
-    icon: '/favicon.svg?auto=format&fit=crop&w=64&h=64',
-    shortcut: '/favicon.svg',
-    apple: '/favicon.svg',
+    icon: `${basePath}/favicon.svg`,
+    shortcut: `${basePath}/favicon.svg`,
+    apple: `${basePath}/favicon.svg`,
   },
 }
 
